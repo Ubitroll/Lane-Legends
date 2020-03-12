@@ -12,6 +12,8 @@ public class PlayerInput : MonoBehaviour
     public bool leftStick = true;
     public bool rightStick = true;
     public bool dPad = true;
+    public bool triggers = true;
+    public bool leftTriggerPressed, rightTriggerPressed = false;
     public bool aPressed, bPressed, xPressed, yPressed = false;
     public bool dPadUp, dPadDown, dPadLeft, dPadRight = false;
     public bool selectPressed, pausePressed = false;
@@ -48,6 +50,8 @@ public class PlayerInput : MonoBehaviour
     private string dPadLeftRight;
     private string select;
     private string pause;
+    private string leftTrigger;
+    private string rightTrigger;
 
     // Start is called before the first frame update
     void Start()
@@ -65,6 +69,8 @@ public class PlayerInput : MonoBehaviour
         dPadLeftRight = "C" + playerNumber.ToString() + "DpadLR";
         select = "C" + playerNumber.ToString() + "Select";
         pause = "C" + playerNumber.ToString() + "Pause";
+        leftTrigger = "C" + playerNumber.ToString() + "LT";
+        rightTrigger = "C" + playerNumber.ToString() + "RT";
 
         // Set player transform
         playerTransform = transform;
@@ -96,6 +102,32 @@ public class PlayerInput : MonoBehaviour
             var lookDirection = Mathf.Atan2(Input.GetAxis(horizontal), -Input.GetAxis(vertical)) * Mathf.Rad2Deg;
             
             playerTransform.rotation = Quaternion.Euler(0, lookDirection, 0);   
+        }
+
+        // If triggers set to respond
+        if (triggers)
+        {
+            // If left trigger is pressed
+            if (Input.GetAxis(leftTrigger) > 0)
+            {
+                leftTriggerPressed = true;
+            }
+            else
+            {
+                leftTriggerPressed = false;
+            }
+              
+            // If right trigger is pressed
+            if(Input.GetAxis(rightTrigger) > 0)
+            {
+                rightTriggerPressed = true;
+            }
+            else
+            {
+                rightTriggerPressed = false;
+            }
+            
+       
         }
 
         // If the Dpad is activated
